@@ -33,6 +33,8 @@ const FIELD_PATTERNS = {
   account: ["account", "account name", "acct", "tradovate account"],
 } as const;
 
+const DELIMITER_CANDIDATES = [",", ";", "\t", "|"] as const;
+
 function normalizeHeader(value: string) {
   return value
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
@@ -95,14 +97,44 @@ function parseDate(value: string) {
 }
 
 export function parseTradovateCsv(csvText: string): TradeImportRow[] {
-  const parsed = Papa.parse<Record<string, string>>(csvText, {
+  const sanitizedText = csvText.replace(/^\uFEFF/, "").trim();
+
+  if (!sanitizedText) {
+    throw new Error("The uploaded CSV is empty.");
+  }
+
+  const parseOptions = {
     header: true,
     skipEmptyLines: true,
     transformHeader: normalizeHeader,
-  });
+  } satisfies Papa.ParseConfig<Record<string, string>>;
 
-  if (parsed.errors.length > 0) {
-    throw new Error(parsed.errors[0]?.message || "Failed to parse CSV");
+  let parsed = Papa.parse<Record<string, string>>(sanitizedText, parseOptions);
+  const delimiterWarning = parsed.errors.find((error) =>
+    error.message.toLowerCase().includes("delimiting character"),
+  );
+
+  if (delimiterWarning) {
+    const retry = DELIMITER_CANDIDATES.map((delimiter) =>
+      Papa.parse<Record<string, string>>(sanitizedText, {
+        ...parseOptions,
+        delimiter,
+      }),
+    )
+      .filter((result) => !result.errors.some((error) => error.type === "Delimiter"))
+      .sort(
+        (left, right) =>
+          (right.meta.fields?.length || 0) - (left.meta.fields?.length || 0),
+      )[0];
+
+    if (retry) {
+      parsed = retry;
+    }
+  }
+
+  const blockingError = parsed.errors.find((error) => error.type !== "Delimiter");
+  if (blockingError) {
+    throw new Error(blockingError.message || "Failed to parse CSV");
   }
 
   const headers = (parsed.meta.fields || []).map(normalizeHeader);
