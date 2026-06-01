@@ -51,7 +51,7 @@ export function TradeJournalForm({ trade }: TradeJournalFormProps) {
           placeholder="What did you see? What was the plan? Did you execute it?"
         />
       </label>
-      <button className="w-fit rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment transition hover:opacity-92">
+      <button className="w-full rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment transition hover:opacity-92 sm:w-fit">
         Save journal notes
       </button>
     </form>

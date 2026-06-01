@@ -75,7 +75,7 @@ export default async function AnalyticsPage({ searchParams }: AnalyticsPageProps
         <Card title="Time-of-day performance" eyebrow="Clock bias">
           <div className="space-y-3">
             {analytics.timeOfDayPerformance.map((row) => (
-              <div key={row.hour} className="flex items-center justify-between rounded-2xl bg-ink/6 px-4 py-3">
+              <div key={row.hour} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-ink/6 px-4 py-3">
                 <div>
                   <p className="font-medium text-ink">{row.hour}:00</p>
                   <p className="text-xs text-ink/55">{row.trades} trades</p>

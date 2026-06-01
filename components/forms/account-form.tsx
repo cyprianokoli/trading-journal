@@ -126,7 +126,7 @@ export function AccountForm({ mode, account }: AccountFormProps) {
         />
       </label>
       <div className="md:col-span-2">
-        <button className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment transition hover:opacity-92">
+        <button className="w-full rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment transition hover:opacity-92 sm:w-fit">
           {mode === "create" ? "Create account" : "Save funded rules"}
         </button>
       </div>

@@ -27,7 +27,7 @@ export default async function TradesPage({ searchParams }: TradesPageProps) {
     <div className="space-y-6">
       <AccountSwitcher accounts={accounts} selectedAccountId={selected?.id} pathname="/trades" />
       <Card title="Trade filters" eyebrow="Review slices">
-        <form className="grid gap-4 md:grid-cols-5">
+        <form className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
           <input type="hidden" name="account" defaultValue={selected?.id} />
           <label className="grid gap-2 text-sm text-ink/70">
             Symbol
@@ -89,8 +89,8 @@ export default async function TradesPage({ searchParams }: TradesPageProps) {
               <option value="loss">Losses only</option>
             </select>
           </label>
-          <div className="md:col-span-5">
-            <button className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment">
+          <div className="sm:col-span-2 xl:col-span-5">
+            <button className="w-full rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment sm:w-fit">
               Apply filters
             </button>
           </div>

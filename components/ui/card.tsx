@@ -14,19 +14,19 @@ export function Card({ title, eyebrow, action, children, className }: CardProps)
   return (
     <section
       className={cn(
-        "rounded-[28px] border border-white/55 bg-[#f8f1e7]/85 p-6 shadow-glow backdrop-blur-sm",
+        "rounded-[24px] border border-white/55 bg-[#f8f1e7]/85 p-4 shadow-glow backdrop-blur-sm sm:rounded-[28px] sm:p-6",
         className,
       )}
     >
       {(title || eyebrow || action) && (
-        <div className="mb-5 flex items-start justify-between gap-4">
+        <div className="mb-4 flex items-start justify-between gap-4 sm:mb-5">
           <div>
             {eyebrow ? (
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-ink/55">
                 {eyebrow}
               </p>
             ) : null}
-            {title ? <h2 className="mt-2 text-xl font-semibold text-ink">{title}</h2> : null}
+            {title ? <h2 className="mt-2 text-lg font-semibold text-ink sm:text-xl">{title}</h2> : null}
           </div>
           {action}
         </div>

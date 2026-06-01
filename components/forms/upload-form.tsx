@@ -19,7 +19,7 @@ export function UploadForm({ accountId }: UploadFormProps) {
       </label>
       <button
         disabled={!accountId}
-        className="w-fit rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment transition hover:opacity-92 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment transition hover:opacity-92 disabled:cursor-not-allowed disabled:opacity-50 sm:w-fit"
       >
         Import trades
       </button>
