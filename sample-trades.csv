@@ -1,0 +1,5 @@
+Symbol,Buy/Sell,Quantity,Price,Timestamp,PnL,Fees,Commission,Order ID,Account
+NQU6,Buy,1,19250.25,2026-05-28 09:31:00,-150.00,2.30,4.12,ord-1001,Lucid 25k
+NQU6,Sell,1,19278.75,2026-05-28 10:12:00,285.00,2.30,4.12,ord-1002,Lucid 25k
+ESU6,Buy,2,5351.50,2026-05-29 08:47:00,180.00,2.60,4.70,ord-1003,Lucid 25k
+ESU6,Sell,1,5342.25,2026-05-30 12:58:00,-95.00,1.30,2.35,ord-1004,Lucid 25k

@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Account {
+  id                     String   @id @default(cuid())
+  name                   String
+  broker                 String   @default("Tradovate")
+  provider               String   @default("Lucid")
+  startingBalance        Decimal  @db.Decimal(12, 2)
+  payoutTarget           Decimal  @default(0) @db.Decimal(12, 2)
+  maxDrawdown            Decimal  @default(0) @db.Decimal(12, 2)
+  consistencyThreshold   Decimal  @default(30) @db.Decimal(5, 2)
+  dailyLossLimit         Decimal? @db.Decimal(12, 2)
+  profitShare            Decimal? @db.Decimal(5, 2)
+  costPerContract        Decimal  @default(0) @db.Decimal(12, 6)
+  trackingStartDate      DateTime?
+  notes                  String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  trades                 Trade[]
+}
+
+model Trade {
+  id             String   @id @default(cuid())
+  accountId      String
+  symbol         String
+  side           String?
+  quantity       Int?
+  price          Decimal? @db.Decimal(12, 4)
+  executedAt     DateTime
+  pnl            Decimal  @db.Decimal(12, 2)
+  fees           Decimal  @default(0) @db.Decimal(12, 2)
+  commission     Decimal  @default(0) @db.Decimal(12, 2)
+  orderId        String?
+  sourceAccount  String?
+  setupTag       String?
+  mistakeTag     String?
+  notes          String?
+  screenshotUrl  String?
+  rawRow         String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  account        Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId, executedAt])
+  @@index([accountId, symbol])
+  @@index([accountId, setupTag])
+}
